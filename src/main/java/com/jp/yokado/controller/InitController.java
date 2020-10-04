@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 
 import com.jp.yokado.form.ReceiptForm;
 import com.jp.yokado.utils.Utils;
@@ -27,13 +28,13 @@ public class InitController {
     }
 
     @PostMapping(params = "appendRow")
-    public String appendRow(ReceiptForm form, BindingResult result) {
+    public String appendRow(@Valid ReceiptForm form, BindingResult result) {
         form.appendRow();
         return "initPage";
     }
 
     @PostMapping(params = "removeIndex")
-    public String submit(ReceiptForm form, @RequestParam int removeIndex) {
+    public String submit(ReceiptForm form, @RequestParam int removeIndex, BindingResult result) {
         form.removeRow(removeIndex);
         return "initPage";
     }

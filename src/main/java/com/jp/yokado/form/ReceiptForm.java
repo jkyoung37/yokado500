@@ -9,11 +9,6 @@ public class ReceiptForm {
     private List<Receipt> receipts = new ArrayList<>();
 
     public ReceiptForm() {
-        this.receipts.add(new Receipt());
-        this.receipts.add(new Receipt());
-        this.receipts.add(new Receipt());
-        this.receipts.add(new Receipt());
-        this.receipts.add(new Receipt());
     }
 
     public void appendRow() {
