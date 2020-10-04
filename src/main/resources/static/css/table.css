@@ -1,0 +1,21 @@
+body
+{
+ counter-reset: Serial;           /* Set the Serial counter to 0 */
+}
+
+table
+{
+ border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+ counter-increment: Serial; 
+ content: counter(Serial);  
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}

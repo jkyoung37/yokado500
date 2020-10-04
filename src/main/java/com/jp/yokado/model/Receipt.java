@@ -1,29 +1,18 @@
 package com.jp.yokado.model;
 
+import javax.validation.constraints.Min;
+
+
 public class Receipt {
 
-    private int no;
-    private int point;
+	@Min(1)
+    private Integer point;
 
-    public Receipt(int no, int point) {
-        this.no = no;
-        this.point = point;
-    }
+	public Integer getPoint() {
+		return point;
+	}
 
-    public int getNo() {
-        return no;
-    }
-
-    public void setNo(int no) {
-        this.no = no;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
 }

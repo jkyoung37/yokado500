@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>こんにちは、えくすぷれす。</title>
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+</style>
+
+<body>
+    <h1>ヨーカドーポイント計算（テスト）</h1>
+    <table style="width:30%" id="table1">
+        <tr>
+            <th>No</th>
+            <th>ポイント</th>
+            <th>削除</th>
+        </tr>
+            <form th:object="${receipts}">
+            <tr>
+                <td></td>
+                <td><span th:text="*{point}"></td>
+                <td></td>
+            </tr>
+           </form>
+    </table>
+    <br/><br/>
+</body>
+</html>
