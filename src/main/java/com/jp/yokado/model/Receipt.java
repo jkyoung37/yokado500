@@ -1,9 +1,5 @@
 package com.jp.yokado.model;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
-
 public class Receipt {
 
     private Integer point;
