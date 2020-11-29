@@ -8,7 +8,7 @@ public class Utils {
 
     public static boolean OverMaxPoint(List<Receipt> receipts) {
         double allSumValue = receipts.stream().mapToInt(Receipt::getPoint).sum();
-        if (allSumValue < Numbers.POINT) {
+        if (allSumValue < Numbers.MAX_POINT) {
             return false;
         }
         return true;

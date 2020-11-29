@@ -1,6 +1,7 @@
 package com.jp.yokado.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Stack;
 
 import com.jp.yokado.form.ReceiptForm;
 import com.jp.yokado.model.Receipt;
 import com.jp.yokado.utils.*;
+import com.jp.yokado.validation.Validations;
 
 @Controller
 @RequestMapping("/init")
@@ -28,49 +27,77 @@ public class InitController {
     }
 
     @GetMapping
-    public String init() {
-        return "initPage";
+    public String init(ReceiptForm form) {
+        form.appendRow();
+        return "index";
     }
 
     @PostMapping(params = "appendRow")
     public String appendRow(ReceiptForm form, BindingResult result) {
         form.appendRow();
-        return "initPage";
+        return "index";
     }
 
     @PostMapping(params = "removeIndex")
     public String submit(ReceiptForm form, @RequestParam int removeIndex, BindingResult result) {
         form.removeRow(removeIndex);
-        return "initPage";
+        return "index";
     }
 
     @PostMapping(params = "doCalculate")
-    public String submit(ReceiptForm form, BindingResult result) {
+    public String submit(Model model, ReceiptForm form, BindingResult result) {
 
-        List<int[]> allPoints = getAllPoint(form);
-        List<int[]> over2500 = new ArrayList<>();
+        if(result.hasErrors()){
+            return "index";
+        }
+       
+        if(hasErrors(form)){
+            return "index";
+        }
 
-
+        List<int[]> allPoints = new ArrayList<>();
         boolean isOverMaxpoint = Utils.OverMaxPoint(form.getReceipts());
+        Integer minSum = 0;
+        List<int[]> minSumResult = new ArrayList<>();
 
         if (isOverMaxpoint) {
+            allPoints = getAllPoint(form);
+
+            // Maxpoints Pick up
             for (int i = 0; i < allPoints.size(); i++) {
                 int[] items = allPoints.get(i);
                 int sum = 0;
-    
+
                 for (int j = 0; j < items.length; j++) {
                     sum += items[j];
                 }
-    
-                if (sum >= Numbers.POINT) {
-                    over2500.add(allPoints.get(i));
-                } 
+
+                if (sum >= Numbers.MAX_POINT) {
+                    if (sum <= minSum.intValue() || minSum.intValue() == 0) {
+                        minSum = sum;
+                        minSumResult.add(0, items);
+                    }
+                }
             }
         } else {
-
+            return "index";
         }
-        return "initPage";
 
+        if(minSumResult.size() == 0){
+            return "index";
+        }else{
+
+            List<String> resultNM = new ArrayList<>();
+            int[] resultNm = minSumResult.get(0);
+            for (int i = 0; i < resultNm.length ; i++) {
+                int inputNm = resultNm[i];
+                String intToStringNM = String.valueOf(inputNm);
+                resultNM.add(intToStringNM);
+            }
+
+            model.addAttribute("result", resultNM.toString());
+            return "ResultPage";
+        }
     }
 
     private List<int[]> getAllPoint(ReceiptForm form) {
@@ -84,6 +111,16 @@ public class InitController {
             Combination.combination(points, visited, 0, n, i);
         }
         return Combination.getItem();
+    }
+
+    private boolean hasErrors(ReceiptForm form){
+
+        boolean isNull = Validations.isNull(form.getReceipts());
+        if(isNull){
+            return true;
+        }
+        return false;
+    
     }
 
 }
