@@ -75,7 +75,7 @@ public class InitController {
                 if (sum >= Numbers.MAX_POINT) {
                     if (sum <= minSum.intValue() || minSum.intValue() == 0) {
                         minSum = sum;
-                        minSumResult.add(0, items);
+                        minSumResult.add(items);
                     }
                 }
             }
@@ -87,16 +87,24 @@ public class InitController {
             return "index";
         }else{
 
-            List<String> resultNM = new ArrayList<>();
-            int[] resultNm = minSumResult.get(0);
-            for (int i = 0; i < resultNm.length ; i++) {
-                int inputNm = resultNm[i];
-                String intToStringNM = String.valueOf(inputNm);
-                resultNM.add(intToStringNM);
+            int[] miniNb;
+            List<StringBuilder> resultList = new ArrayList();
+            for(int[] item : minSumResult){
+                miniNb = item;
+                StringBuilder resultMSG = new StringBuilder();
+                for (int i = 0; i < miniNb.length ; i++) {
+                    int inputNm = miniNb[i];
+                    if(i==0){
+                        resultMSG.append(i+1);
+                        resultMSG.append(" : ");
+                    }
+                    resultMSG.append(inputNm);
+                }
+                resultList.add(resultMSG);
             }
 
-            model.addAttribute("result", resultNM.toString());
-            return "ResultPage";
+            model.addAttribute("result", resultList);
+            return "resultPage";
         }
     }
 
