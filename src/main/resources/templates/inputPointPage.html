@@ -13,7 +13,10 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">ヨーカドーポイント</a>
+      <div>
+      	<a class="navbar-brand" th:href="@{/}">Main</a>
+      	<div class="navbar-brand">ヨーカドーポイント</div>
+     </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -41,7 +44,16 @@
          <div class="col-md-12">
             <h4></h4>
             <div class="table-responsive">
-              <form th:action="@{/init}" method="post" th:object="${receiptForm}">
+              <form th:action="@{/point}" method="post" th:object="${receiptForm}">
+              
+              <div class="card h-100">
+              	<div class="card-body">
+            		<h4 class="card-title">基準ポイント</h4>
+ 		       		<input type="text" th:field="*{maxPoint}" maxlength="8" onkeypress="return isNumberKey(event)">
+ 		       		&nbsp;<span th:if="${#fields.hasErrors('maxPoint')}" th:errors="*{maxPoint}" style="color: red"/>
+ 		        </div>
+              </div>
+              
               <table id="mytable" class="table table-bordred table-striped">
                 <thead>
                  <th>番号</th>
@@ -69,15 +81,10 @@
                 </tr>
                </tbody>
               </table>
+              <input type="submit" class="btn btn-primary btn-sm" name="goBefore" value="前へ" />
               <input type="submit" class="btn btn-primary btn-sm" name="appendRow" value="追加" />
               <input type="submit" class="btn btn-primary btn-sm" name="doCalculate" value="計算" />
             </form>
-    <div class="row">
-      <table></table>
-    </div>
-
-    <!-- /.row -->
-
   </div>
   <!-- /.container -->
 
