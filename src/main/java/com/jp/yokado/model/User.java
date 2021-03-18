@@ -1,38 +1,61 @@
 package com.jp.yokado.model;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class User {
+@Entity
+@Table
+public class User implements Serializable {
+  @Id
+  @Column
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long idx;
 
-	private Long id;
+  @Column
+  private String name;
 
-	private String name;
+  @Column
+  private String password;
 
-	private String email;
+  @Column
+  private String email;
 
-	private String picture;
+  @Column
+  private String principal;
 
-	private Role role;
+  @Column
+  @Enumerated(EnumType.STRING)
+  private SocialType socialType;
 
-	public User(String name, String email, String picture, Role role) {
-		this.name = name;
-		this.email = email;
-		this.picture = picture;
-		this.role = role;
-	}
+  @Column
+  private LocalDateTime createdDate;
 
-	public User update(String name, String picture) {
-		this.name = name;
-		this.picture = picture;
+  @Column
+  private LocalDateTime updatedDate;
 
-		return this;
-	}
+  @Builder
+  public User(String name, String password, String email, String principal, SocialType socialType,
+      LocalDateTime createdDate, LocalDateTime updatedDate) {
+    this.name = name;
+    this.password = password;
+    this.email = email;
+    this.principal = principal;
+    this.socialType = socialType;
 
-	public String getRoleKey() {
-		return this.role.getKey();
-	}
-
+    this.createdDate = createdDate;
+    this.updatedDate = updatedDate;
+  }
 }

@@ -1,28 +1,21 @@
 package com.jp.yokado.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.jp.yokado.dto.SessionUser;
+import com.jp.yokado.annotation.SocialUser;
+import com.jp.yokado.model.User;
 
 @Controller
-@RequestMapping("/")
 public class InitController {
 
-	@GetMapping
-	public String init() {
-		return "login";
-	}
+  @GetMapping({"", "/"})
+  public String getAuthorizationMessage() {
+    return "login";
+  }
 
-	@GetMapping(value = "/select")
-	public String goSelectPage(Model model, HttpSession session) {
+  @GetMapping("/loginSuccess")
+  public String loginComplete(@SocialUser User user) {
+    return "redirect:/point";
+  }
 
-		SessionUser member = (SessionUser) session.getAttribute("user");
-
-		return "selectPage";
-	}
 }

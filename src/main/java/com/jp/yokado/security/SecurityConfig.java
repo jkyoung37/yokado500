@@ -1,25 +1,24 @@
 package com.jp.yokado.security;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
-import com.jp.yokado.service.CustomOAuth2UserService;
-
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	private final CustomOAuth2UserService customOAuth2UserService;
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-
-		http.csrf().disable().headers().frameOptions().disable().and().authorizeRequests()
-				.antMatchers("/", "/css/**", "/js/**", "/fonts/**", "/jquery/**", "/vendor/**", "/images/**")
-				.permitAll().anyRequest().authenticated().and().oauth2Login().defaultSuccessUrl("/select")
-				.userInfoEndpoint().userService(customOAuth2UserService);
-	}
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.authorizeRequests()
+        .antMatchers("/", "/oauth2/**", "/login/**", "/css/**", "/images/**", "/js/**",
+            "/console/**")
+        .permitAll().anyRequest().authenticated().and().oauth2Login()
+        .defaultSuccessUrl("/loginSuccess").failureUrl("/loginFailure").and().headers()
+        .frameOptions().disable().and().exceptionHandling()
+        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")).and().formLogin()
+        .successForwardUrl("/board").and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
+        .deleteCookies("JSESSIONID").invalidateHttpSession(true).and().csrf().disable();
+  }
 }
