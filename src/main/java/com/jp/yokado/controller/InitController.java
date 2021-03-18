@@ -13,9 +13,14 @@ public class InitController {
     return "login";
   }
 
+  @GetMapping("/select")
+  public String viewSelectPage() {
+    return "selectPage";
+  }
+
   @GetMapping("/loginSuccess")
   public String loginComplete(@SocialUser User user) {
-    return "redirect:/point";
+    return "redirect:/select";
   }
 
 }
