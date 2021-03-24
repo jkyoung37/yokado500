@@ -37,12 +37,15 @@
 	    <table class="table table-bordred table-striped">
 	    		<thead>
 	    			<th width="25%">番号</th>
-	    			<th>ポイント</th>
+	    			<th>レシート一覧</th>
+	    			<th>総合ポイント</th>
 	    		</thead>
 	    		<tbody>
 	    			<tr th:each="result, itemStat : ${results}">
-	    			<td height="64px" th:text="${itemStat.count}"></td>
-	    			<td th:text="${result}"/>
+	    				<td height="64px" th:text="${itemStat.count}"></td>
+	    				<td th:text="${result.resultReceipt}"/>
+	    				<td th:text="${result.resultPoint}"/>
+	    			</tr>
 	    		</tbody>
 	    </table>
 	    
