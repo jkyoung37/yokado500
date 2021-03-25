@@ -19,4 +19,4 @@ spring:
             client-id: 828269246467-p5e97ndekapgfmrq5a0ai6fe5r35bv63.apps.googleusercontent.com
             client-secret: xRNiaD5ijmsuvUIBTuhbzsio
 server:
-  port: 8080
+  port: 80
