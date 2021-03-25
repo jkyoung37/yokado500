@@ -12,8 +12,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.authorizeRequests()
-        .antMatchers("/", "/oauth2/**", "/login/**", "/css/**", "/images/**", "/js/**",
-            "/console/**")
+        .antMatchers("/", "/oauth2/**", "/login/**", "/css/**", "/images/**", "/js/**", "/fonts/**",
+            "/vendor/**", "/console/**")
         .permitAll().anyRequest().authenticated().and().oauth2Login()
         .defaultSuccessUrl("/loginSuccess").failureUrl("/loginFailure").and().headers()
         .frameOptions().disable().and().exceptionHandling()
