@@ -13,8 +13,10 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table
@@ -57,5 +59,12 @@ public class User implements Serializable {
 
     this.createdDate = createdDate;
     this.updatedDate = updatedDate;
+  }
+
+  @Builder
+  public User(String name, String password, String email) {
+    this.name = name;
+    this.password = password;
+    this.email = email;
   }
 }

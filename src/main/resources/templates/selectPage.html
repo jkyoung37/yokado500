@@ -1,58 +1,65 @@
 <!DOCTYPE HTML>
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>ヨーカドーポイント</title>
-        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-      </head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>ヨーカドーポイント</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
 <style>
 </style>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-      	  <a class="navbar-brand" th:href="@{/}">Main</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-             </ul>
-          </div>
-        </div>
-      </nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/}">Main</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-        <!-- Page Content -->
-  <div class="container">
-    <!-- Heading Row -->
-    <div class="row align-items-center my-5">
-    </div>
+	<!-- Page Content -->
+	<div class="container">
+		<!-- Heading Row -->
+		<div class="row align-items-center my-5"></div>
 
-    <div class="container">
-	    <table class="table table-bordred table-striped">
-	    		<thead>
-	    			<th width="20%">項目</th>
-	    			<th width="20%">選択</th>
-	    		</thead>
-	    		<tbody>
-	    			<tr>
-		    		  <td>ポイント計算</td>
-		    		  <td>	    
-		    		  	<form th:action="@{/point}" method="post">
-        					<input type="submit" class="btn btn-primary btn-sm" name="init" value="ポイントページへ" />
-	    				</form>
-	    			   </td>
-	    			</tr>
-	    		</tbody>
-	    </table>
-	    
-	    <p th:text="${session.userName}" />
-	    <p th:text="${session.userEmail}" />
-    </div>
-  </div>
+		<div class="container">
+			<table class="table table-bordred table-striped">
+				<thead>
+					<th width="20%">項目</th>
+					<th width="20%">選択</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>ポイント計算</td>
+						<td>
+							<form th:action="@{/point}" method="post">
+								<input type="submit" class="btn btn-primary btn-sm" name="init" value="ポイントページへ" />
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div sec:authorize="isAuthenticated()">
+				<th:text="${#authentication.getPrincipal().getName()}">
+				<span sec:authentication="name"></span>님!
+				<sec:authorize access="hasRole('ADMIN')">
+   				 Manage Users
+				</sec:authorize>
+			</div>
+
+			<p th:text="${session.userName}" />
+			<p th:text="${session.userEmail}" />
+		</div>
+	</div>
 </body>
 </html>

@@ -1,14 +1,14 @@
 package com.jp.yokado.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
+@AllArgsConstructor
 @Getter
-@RequiredArgsConstructor
 public enum Role {
 
-	GUEST("ROLE_GUEST", "GUEST"), USER("ROLE_USER", "USER");
+  ADMIN("ROLE_ADMIN"), MEMBER("ROLE_MEMBER");
 
-	private final String key;
-	private final String title;
+  private String value;
+
 }
